@@ -57,6 +57,8 @@
 .badge {
   all: unset;
   display: inline-flex;
+  position: relative;
+  top: -2px;
   align-items: center;
   gap: 4px;
   margin-left: 6px;
