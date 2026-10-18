@@ -1,0 +1,2 @@
+* text=auto eol=lf
+extension/data/grades.json -diff linguist-generated

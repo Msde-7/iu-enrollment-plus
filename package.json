@@ -1,0 +1,27 @@
+{
+  "name": "iu-stellic-plus",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write . && eslint --fix .",
+    "typecheck": "tsc -p jsconfig.json",
+    "test": "node --test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run check:py",
+    "build:data": "python -I tools/build_data.py",
+    "check:py": "python -m ruff check . && python -m ruff format --check . && python -m mypy tools tests && python -m pytest -q",
+    "test:e2e": "node tests/e2e/run.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/chrome": "^0.3.5",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
+  }
+}

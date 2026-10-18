@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mock Stellic</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <div><span data-testid="course-code">CSCI-C 211</span> Intro to Computer Science</div>
+    <div>MATH-M211 Calculus I</div>
+    <div>FAKE-X 999 Not a real course</div>
+    <div id="panel"></div>
+    <script>
+      document.getElementById("panel").attachShadow({ mode: "open" }).innerHTML = `
+        <div class="course-sub-info"><p>ECON-E 309</p></div>
+        <div class="tw-inline-block"><div>Gerhard Glomm</div><div><span>9 semesters</span></div></div>
+        <div class="section-instructors"><p>John Stone</p></div>`;
+      setTimeout(() => (document.querySelector("[data-testid=course-code]").textContent = "ECON-E 201"), 2000);
+    </script>
+  </body>
+</html>
