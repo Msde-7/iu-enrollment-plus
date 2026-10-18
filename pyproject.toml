@@ -16,6 +16,7 @@ ignore = ["D", "COM812", "CPY001", "INP001", "T201", "ANN401", "PLR2004", "S101"
 
 [tool.mypy]
 strict = true
+mypy_path = "tools"
 
 [tool.pytest.ini_options]
 pythonpath = ["tools"]

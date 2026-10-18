@@ -70,7 +70,10 @@ async function handle(message) {
   }
 }
 
-chrome.runtime.onInstalled.addListener(async () => {
+chrome.runtime.onInstalled.addListener(async ({ reason }) => {
+  if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    await chrome.tabs.create({ url: chrome.runtime.getURL("welcome/welcome.html") });
+  }
   await chrome.storage.local.clear();
   const [{ matches, js: files } = {}] = chrome.runtime.getManifest().content_scripts ?? [];
   if (!matches || !files) return;
