@@ -175,7 +175,7 @@ function renderComparisons(course) {
     h(
       "div",
       { className: "cmp-key" },
-      h("i", { className: "mk-k me" }),
+      h("i", { className: `mk-k me ${gpaClass(course.gpa)}` }),
       "this course",
       h("i", { className: "mk-k them" }),
       "average",
