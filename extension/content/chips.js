@@ -3,7 +3,7 @@ import { formatGpa, gpaClass } from "../lib/format.js";
 import { matchInstructor, toRegistrarName } from "../lib/instructors.js";
 import { renderRating } from "../ui/card.js";
 import { h } from "../ui/dom.js";
-import { hostsIn } from "./hosts.js";
+import { hostsIn, spacedText } from "./hosts.js";
 
 /**
  * @typedef {import("../lib/types.js").Course} Course
@@ -75,7 +75,7 @@ export function createChipper({ mountHost, resolve, getSettings }) {
     const targets = findNameElements(root);
     if (!targets.length) return;
     const codeEl = root.querySelector(".course-sub-info, [data-testid='course-code']");
-    const [code] = codesIn(codeEl?.textContent ?? "");
+    const [code] = codesIn(codeEl ? spacedText(codeEl) : "");
     const course = code ? ((await resolve([code])).get(code) ?? null) : null;
     if (!course && !getSettings().rmp) return;
 

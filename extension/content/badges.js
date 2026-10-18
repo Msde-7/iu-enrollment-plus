@@ -2,7 +2,7 @@ import { codesIn, hasCode } from "../lib/courses.js";
 import { formatGpa, gpaClass, summarize } from "../lib/format.js";
 import { badgeLabel } from "../ui/badge.js";
 import { h } from "../ui/dom.js";
-import { hostsIn } from "./hosts.js";
+import { hostsIn, spacedText } from "./hosts.js";
 
 /**
  * @typedef {import("../lib/types.js").Course} Course
@@ -83,7 +83,7 @@ export function createBadger({ mountHost, popover, resolve, getSettings }) {
   /** Stellic re-renders lists in place, so drop badges whose code no longer sits beside them. @param {ParentNode} root */
   function removeStale(root) {
     for (const host of hostsIn(root, "badge")) {
-      if (!host.parentElement || !codesIn(host.parentElement.textContent ?? "").has(host.dataset.code ?? "")) {
+      if (!host.parentElement || !codesIn(spacedText(host.parentElement)).has(host.dataset.code ?? "")) {
         host.remove();
       }
     }

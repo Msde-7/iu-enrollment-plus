@@ -36,5 +36,13 @@ export function hostsIn(root, kind) {
   return Array.from(root.querySelectorAll(`[${HOST_ATTR}="${kind}"]`));
 }
 
+/** Text of every text node under `node`, space separated so adjacent elements don't run together. @param {Node} node */
+export function spacedText(node) {
+  const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+  const parts = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) parts.push(n.nodeValue);
+  return parts.join(" ");
+}
+
 /** @param {Node} node */
 export const isHost = (node) => node instanceof Element && node.hasAttribute(HOST_ATTR);
