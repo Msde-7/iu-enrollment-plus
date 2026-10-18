@@ -12,7 +12,7 @@ DIST = ROOT / "dist"
 def main() -> None:
     version = json.loads((EXTENSION / "manifest.json").read_text(encoding="utf-8"))["version"]
     DIST.mkdir(exist_ok=True)
-    archive = DIST / f"iu-stellic-plus-{version}.zip"
+    archive = DIST / f"iu-enrollment-plus-{version}.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
         for path in sorted(EXTENSION.rglob("*")):
             if path.is_file():

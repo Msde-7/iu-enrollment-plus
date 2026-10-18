@@ -2,11 +2,11 @@
 
 <img src="extension/icons/icon-128.png" alt="" width="80">
 
-# IU Stellic Plus
+# IU Enrollment Plus
 
 **See real grade distributions and professor ratings for every course, right inside Stellic.**
 
-[![Download](https://img.shields.io/badge/Download-ZIP-990000?style=for-the-badge)](https://github.com/Msde-7/iu-stellic-plus/archive/refs/heads/main.zip)
+[![Download](https://img.shields.io/badge/Download-ZIP-990000?style=for-the-badge)](https://github.com/Msde-7/iu-enrollment-plus/archive/refs/heads/main.zip)
 
 ![Chrome](https://img.shields.io/badge/Chrome-111%2B-4285F4?logo=googlechrome&logoColor=white)
 ![Edge](https://img.shields.io/badge/Edge-111%2B-0078D7?logo=microsoftedge&logoColor=white)
@@ -20,7 +20,7 @@
 
 ### 1. Download
 
-Click **[Download ZIP](https://github.com/Msde-7/iu-stellic-plus/archive/refs/heads/main.zip)** and unzip it anywhere you
+Click **[Download ZIP](https://github.com/Msde-7/iu-enrollment-plus/archive/refs/heads/main.zip)** and unzip it anywhere you
 will keep it, such as your Documents folder. Chrome and Edge load the extension from that folder, so don't delete it
 afterwards.
 

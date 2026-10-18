@@ -1,5 +1,5 @@
 [project]
-name = "iu-stellic-plus-tools"
+name = "iu-enrollment-plus-tools"
 version = "1.0.0"
 requires-python = ">=3.11"
 

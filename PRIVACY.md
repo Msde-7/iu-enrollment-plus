@@ -1,6 +1,6 @@
 # Privacy Policy
 
-IU Stellic Plus does not collect, store or share any personal information.
+IU Enrollment Plus does not collect, store or share any personal information.
 
 ## What the extension reads
 
@@ -22,4 +22,4 @@ locally for up to a week. Removing the extension deletes both.
 
 ## Contact
 
-Questions can be filed as an issue at https://github.com/Msde-7/iu-stellic-plus/issues.
+Questions can be filed as an issue at https://github.com/Msde-7/iu-enrollment-plus/issues.
