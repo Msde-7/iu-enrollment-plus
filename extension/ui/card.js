@@ -1,5 +1,6 @@
 import { GRADE_LABELS, formatGpa, gpaClass, letterGrade, summarize, termLabel, titleCase } from "../lib/format.js";
 import { request } from "../lib/messages.js";
+import { syllabusUrl } from "../lib/syllabi.js";
 import { h } from "./dom.js";
 
 /**
@@ -45,6 +46,22 @@ export async function renderRating(target, instructor, { withCount = true } = {}
       ` ${rating.rating.toFixed(1)}`,
       withCount && h("span", { className: "dim" }, ` (${rating.count})`),
     ),
+  );
+}
+
+/** @param {string} code @param {Pick<Stats, "lt" | "lk">} term @param {string} className @param {string} text */
+function syllabusLink(code, { lt, lk }, className, text) {
+  const href = syllabusUrl(code, lk);
+  if (!href) return h("span", { className }, termLabel(lt));
+  return h(
+    "a",
+    {
+      className,
+      title: `Open IU syllabi for ${code} in ${termLabel(lt)}`,
+      attrs: { href, target: "_blank", rel: "noopener" },
+      on: { click: (e) => e.stopPropagation() },
+    },
+    text,
   );
 }
 
@@ -187,7 +204,7 @@ function renderInstructors(course, settings) {
       h("td", null, h("span", { className: `pill ${gpaClass(stats.gpa)}` }, formatGpa(stats.gpa))),
       h("td", null, pct(summarize(stats).aPct)),
       h("td", null, stats.s),
-      h("td", { className: "dim" }, termLabel(stats.lt)),
+      h("td", null, syllabusLink(course.key, stats, "term", termLabel(stats.lt))),
       ratingCell,
     );
     return { name, stats, aPct: summarize(stats).aPct, tr, ratingCell };
@@ -273,6 +290,8 @@ export function renderCard(course, settings) {
     { className: "card" },
     h("div", { className: "code" }, course.key),
     h("div", { className: "title" }, titleCase(course.t)),
+    syllabusUrl(course.key, course.lk) &&
+      syllabusLink(course.key, course, "syllabi", `Syllabi from ${termLabel(course.lt)} ↗`),
     renderSummary(course),
     renderHistogram(course.c),
     renderComparisons(course),

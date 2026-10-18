@@ -66,7 +66,13 @@ async function evaluate(wsUrl, expression) {
   const reply = new Promise((resolve) =>
     ws.addEventListener("message", (e) => resolve(JSON.parse(e.data)), { once: true }),
   );
-  ws.send(JSON.stringify({ id: 1, method: "Runtime.evaluate", params: { expression, returnByValue: true } }));
+  ws.send(
+    JSON.stringify({
+      id: 1,
+      method: "Runtime.evaluate",
+      params: { expression, returnByValue: true, awaitPromise: true },
+    }),
+  );
   const { result } = await reply;
   ws.close();
   return result.result.value;
@@ -97,6 +103,22 @@ try {
   assert.match(byKey["ECON-E 309"]?.text ?? "", /GPA/, "badge inside page shadow root");
   assert.match(byKey["Gerhard Glomm"]?.text ?? "", /GPA★ \d\.\d/, "chip shows GPA and RateMyProfessors rating");
   assert.match(byKey["John Stone"]?.text ?? "", /GPA/, "section-row chip");
+
+  const syllabusHref = await evaluate(
+    tab.webSocketDebuggerUrl,
+    `(async () => {
+      const badge = document.querySelector('[data-iug-host="badge"][data-code="MATH-M 211"]');
+      badge.shadowRoot.querySelector("button").click();
+      await new Promise((r) => setTimeout(r, 500));
+      const popover = document.querySelector('[data-iug-host="popover"]');
+      return popover.shadowRoot.querySelector("a.syllabi")?.href ?? null;
+    })()`,
+  );
+  assert.match(
+    syllabusHref ?? "",
+    /^https:\/\/syllabi\.iu\.edu\/\?keyword=MATH-M\+211&srcdb=4\d{3}$/,
+    "grade card links to syllabi",
+  );
   console.log("e2e passed");
 } finally {
   browser.kill();

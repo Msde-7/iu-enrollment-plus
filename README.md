@@ -59,6 +59,10 @@ of IU at that level, so a 3.0 in a tough department reads differently from a 3.0
 **Pick the professor, not just the class.** The card lists every instructor who taught the course with their own GPA,
 share of A grades and RateMyProfessors rating. Click a column to sort.
 
+**Read the syllabus first.** The card links to the course's syllabi on IU's
+[Class Syllabus Search](https://syllabi.iu.edu) for the last term it was taught, and each instructor's term links to
+their syllabus.
+
 **Choose the right section.** In a course panel and in the section picker, each instructor gets a chip with their GPA
 and rating for that course.
 

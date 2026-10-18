@@ -236,6 +236,31 @@ a.rmp:hover {
   font-weight: 600;
   margin: 1px 40px 12px 0;
 }
+.title:has(+ .syllabi) {
+  margin-bottom: 2px;
+}
+.syllabi {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--crimson);
+  text-decoration: none;
+}
+.syllabi:hover {
+  text-decoration: underline;
+}
+.term {
+  color: var(--faint);
+  font-weight: 500;
+}
+a.term {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+a.term:hover {
+  color: var(--crimson);
+}
 .hero {
   display: flex;
   gap: 14px;
