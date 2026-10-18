@@ -1,28 +1,92 @@
+<div align="center">
+
 # IU Stellic Plus
 
-A Chrome and Edge extension that adds IU Bloomington grade distributions and RateMyProfessors ratings to
-[Stellic](https://stellic.iu.edu).
+**See real grade distributions and professor ratings for every course, right inside Stellic.**
 
-- **Badges** beside every course code in course search, filters, Track Progress requirements, Plan your Path,
-  schedules and course panels
-- **Grade card** on hover, pinned on click, with a grade histogram, the share of A grades, the withdrawal rate, a
-  comparison with the department and all of IU at the same course level, and a sortable instructor table
-- **Instructor chips** with GPA and rating in course panels and in each section row of the section picker
-- **Toolbar popup** with course search and settings for the badge metric, comparison arrows, hover or click,
-  chips, RateMyProfessors, color theme and compact mode, applied to open Stellic tabs right away
+[![Download](https://img.shields.io/badge/Download-ZIP-990000?style=for-the-badge)](https://github.com/Msde-7/iu-stellic-plus/archive/refs/heads/main.zip)
 
-## Install
+![Chrome](https://img.shields.io/badge/Chrome-111%2B-4285F4?logo=googlechrome&logoColor=white)
+![Edge](https://img.shields.io/badge/Edge-111%2B-0078D7?logo=microsoftedge&logoColor=white)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Works in Chrome and Edge 111 or later.
+<img src="docs/images/course-search.png" alt="Course search in Stellic with a GPA badge beside every course" width="820">
 
-1. Open `chrome://extensions` in Chrome or `edge://extensions` in Edge
-2. Turn on **Developer mode**
-3. Click **Load unpacked** and select the `extension` folder
+</div>
 
-Open Stellic tabs pick up the extension without a refresh. After pulling changes, click the reload icon on the
-extension card.
+## Install in two minutes
 
-## Project layout
+### 1. Download
+
+Click **[Download ZIP](https://github.com/Msde-7/iu-stellic-plus/archive/refs/heads/main.zip)** and unzip it anywhere you
+will keep it, such as your Documents folder. Chrome and Edge load the extension from that folder, so don't delete it
+afterwards.
+
+### 2. Add it to your browser
+
+| Chrome                                                     | Edge                                                       |
+| ---------------------------------------------------------- | ---------------------------------------------------------- |
+| Go to `chrome://extensions`                                | Go to `edge://extensions`                                  |
+| Turn on **Developer mode** in the top right                | Turn on **Developer mode** in the left sidebar             |
+| Click **Load unpacked**                                    | Click **Load unpacked**                                    |
+| Open the unzipped folder and select its `extension` folder | Open the unzipped folder and select its `extension` folder |
+
+### 3. Open Stellic
+
+Go to [stellic.iu.edu](https://stellic.iu.edu). Badges appear next to every course. Pin the extension from the puzzle
+piece icon in the toolbar to reach search and settings in one click.
+
+### Updating
+
+Download the ZIP again, replace the old folder with the new one, then click the reload arrow on the extension's card
+in `chrome://extensions` or `edge://extensions`.
+
+## What you can do with it
+
+<img src="docs/images/grade-card.png" alt="Grade card with histogram, department comparison and instructor ratings" width="380" align="right">
+
+**Spot the easy A and the weed-out course.** Every course code gets a badge with its average GPA since 2016, colored
+from green to red. The arrow shows whether it grades higher or lower than its department at the same level.
+
+**Look before you enroll.** Hover a badge for the full picture. You get the grade histogram, how many students got an
+A, how many withdrew, and when it was last offered.
+
+**Compare it to everything else.** Each card shows how the course stacks up against its department and against all
+of IU at that level, so a 3.0 in a tough department reads differently from a 3.0 in an easy one.
+
+**Pick the professor, not just the class.** The card lists every instructor who taught the course with their own GPA,
+share of A grades and RateMyProfessors rating. Click a column to sort.
+
+**Choose the right section.** In a course panel and in the section picker, each instructor gets a chip with their GPA
+and rating for that course.
+
+**Weigh your requirement options.** Expand a requirement in Track Progress and every course that satisfies it shows
+its badge, so you can compare them side by side.
+
+**Make it yours.** The toolbar popup searches any course and lets you choose what the badge shows, switch between
+hover and click, hide chips or ratings, and pick a color theme.
+
+<br clear="right">
+
+## Privacy
+
+Everything runs in your browser. Grade data ships inside the extension, and the only network request it makes is
+to RateMyProfessors to look up instructor ratings, which are cached for a week. It doesn't collect, store or send
+anything about you or your Stellic account.
+
+## Where the data comes from
+
+Grades come from the public
+[IU Registrar grade distribution reports](https://gradedistribution.registrar.indiana.edu/) for Bloomington, from
+2016 through 2026. IU withholds sections with very few students, and those show as **no grades**. Ratings come from
+[RateMyProfessors](https://www.ratemyprofessors.com/).
+
+This project is not affiliated with Indiana University, Stellic or RateMyProfessors.
+
+<details>
+<summary><b>For developers</b></summary>
+
+### Layout
 
 ```
 extension/
@@ -37,7 +101,7 @@ tools/build_data.py  turns the registrar's per-term CSVs into grades.json
 tests/               node:test, pytest and end-to-end suites
 ```
 
-## Development
+### Checks
 
 Needs Node 22 or later and Python 3.11 or later with ruff, mypy and pytest.
 
@@ -46,24 +110,27 @@ npm install
 npm run check
 ```
 
-`npm run check` runs ESLint, Prettier, a strict TypeScript check of the JSDoc types, the JS unit tests, and ruff,
-strict mypy and pytest for the build script.
+That runs ESLint, Prettier, a strict TypeScript check of the JSDoc types, the JS unit tests, and ruff, strict mypy
+and pytest for the build script.
 
-The end-to-end test loads the extension into a real browser against a mock Stellic page and checks the badges,
-chips and live ratings it renders. Pass it the path to Edge, or to
-[Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing) since branded Chrome ignores
+The end-to-end test loads the extension into a real browser against a mock Stellic page. Pass it the path to Edge,
+or to [Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing) since branded Chrome ignores
 `--load-extension`.
 
 ```bash
 npm run test:e2e -- "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
-npx @puppeteer/browsers install chrome@stable
 ```
 
-## Updating the data
+### Updating the data
 
-Download each term from the [IU grade distribution site](https://gradedistribution.registrar.indiana.edu/) as
-`IUB_GradeDistribution_<year>_<term>.csv`, then rebuild.
+Download each term from the registrar site as `IUB_GradeDistribution_<year>_<term>.csv`, then rebuild.
 
 ```bash
 npm run build:data -- <csv-folder> extension/data/grades.json --since 2016
 ```
+
+</details>
+
+## License
+
+[MIT](LICENSE)

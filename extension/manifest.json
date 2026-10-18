@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "IU Stellic Plus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "IU Bloomington grade distributions and RateMyProfessors ratings beside every course in Stellic.",
+  "homepage_url": "https://github.com/Msde-7/iu-stellic-plus",
   "minimum_chrome_version": "111",
   "background": {
     "service_worker": "background.js",
