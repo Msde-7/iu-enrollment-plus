@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="extension/icons/icon-128.png" alt="" width="80">
+
 # IU Stellic Plus
 
 **See real grade distributions and professor ratings for every course, right inside Stellic.**
@@ -33,7 +35,7 @@ afterwards.
 
 ### 3. Open Stellic
 
-Go to [stellic.iu.edu](https://stellic.iu.edu). Badges appear next to every course. Pin the extension from the puzzle
+A welcome tab opens with a quick tour. Go to [stellic.iu.edu](https://stellic.iu.edu) and badges appear next to every course. Pin the extension from the puzzle
 piece icon in the toolbar to reach search and settings in one click.
 
 ### Updating
