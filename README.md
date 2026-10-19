@@ -6,42 +6,43 @@
 
 **See real grade distributions and professor ratings for every course, right inside Stellic.**
 
-[![Download](https://img.shields.io/badge/Download-ZIP-990000?style=for-the-badge)](https://github.com/Msde-7/iu-enrollment-plus/archive/refs/heads/main.zip)
+[![Add to Chrome](https://img.shields.io/badge/Add_to_Chrome-Free-990000?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/iu-enrollment-plus/dmjmeekdlkeeeiknhpgafdookkdkfklb)
 
-![Chrome](https://img.shields.io/badge/Chrome-111%2B-4285F4?logo=googlechrome&logoColor=white)
-![Edge](https://img.shields.io/badge/Edge-111%2B-0078D7?logo=microsoftedge&logoColor=white)
+[![Chrome Web Store version](https://img.shields.io/chrome-web-store/v/dmjmeekdlkeeeiknhpgafdookkdkfklb?label=Chrome%20Web%20Store&color=4285F4)](https://chromewebstore.google.com/detail/iu-enrollment-plus/dmjmeekdlkeeeiknhpgafdookkdkfklb)
+![Edge](https://img.shields.io/badge/Edge-supported-0078D7?logo=microsoftedge&logoColor=white)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 <img src="docs/images/course-search.png" alt="Course search in Stellic with a GPA badge beside every course" width="820">
 
 </div>
 
-## Install in two minutes
+## Install
 
-### 1. Download
+### Chrome
 
-Click **[Download ZIP](https://github.com/Msde-7/iu-enrollment-plus/archive/refs/heads/main.zip)** and unzip it anywhere you
-will keep it, such as your Documents folder. Chrome and Edge load the extension from that folder, so don't delete it
-afterwards.
+Open **[IU Enrollment Plus on the Chrome Web Store](https://chromewebstore.google.com/detail/iu-enrollment-plus/dmjmeekdlkeeeiknhpgafdookkdkfklb)** and click **Add to Chrome**. It updates automatically.
 
-### 2. Add it to your browser
+### Edge
 
-| Chrome                                                     | Edge                                                       |
-| ---------------------------------------------------------- | ---------------------------------------------------------- |
-| Go to `chrome://extensions`                                | Go to `edge://extensions`                                  |
-| Turn on **Developer mode** in the top right                | Turn on **Developer mode** in the left sidebar             |
-| Click **Load unpacked**                                    | Click **Load unpacked**                                    |
-| Open the unzipped folder and select its `extension` folder | Open the unzipped folder and select its `extension` folder |
+Open the same [Chrome Web Store page](https://chromewebstore.google.com/detail/iu-enrollment-plus/dmjmeekdlkeeeiknhpgafdookkdkfklb). If Edge shows a banner, click **Allow extensions from other stores**,
+then click **Get** or **Add to Chrome**.
 
-### 3. Open Stellic
+### Then open Stellic
 
-A welcome tab opens with a quick tour. Go to [stellic.iu.edu](https://stellic.iu.edu) and badges appear next to every course. Pin the extension from the puzzle
-piece icon in the toolbar to reach search and settings in one click.
+A welcome tab opens with a quick tour. Go to [stellic.iu.edu](https://stellic.iu.edu) and badges appear next to every
+course. Pin the extension from the puzzle piece icon in the toolbar to reach search and settings in one click.
 
-### Updating
+<details>
+<summary>Install from source instead</summary>
 
-Download the ZIP again, replace the old folder with the new one, then click the reload arrow on the extension's card
-in `chrome://extensions` or `edge://extensions`.
+1. Click **[Download ZIP](https://github.com/Msde-7/iu-enrollment-plus/archive/refs/heads/main.zip)** and unzip it
+   somewhere you will keep it
+2. Go to `chrome://extensions` or `edge://extensions` and turn on **Developer mode**
+3. Click **Load unpacked** and select the unzipped folder's `extension` folder
+
+To update, download the ZIP again, replace the folder, and click the reload arrow on the extension's card.
+
+</details>
 
 ## What you can do with it
 
