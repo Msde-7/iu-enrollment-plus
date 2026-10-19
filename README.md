@@ -16,6 +16,10 @@
 
 </div>
 
+> [!IMPORTANT]
+> IU Enrollment Plus is an independent student project. It is **not affiliated with, endorsed by or sponsored by
+> Indiana University, Stellic or RateMyProfessors.** All names and trademarks belong to their owners.
+
 ## Install
 
 ### Chrome
@@ -88,7 +92,7 @@ Grades come from the public
 2016 through 2026. IU withholds sections with very few students, and those show as **no grades**. Ratings come from
 [RateMyProfessors](https://www.ratemyprofessors.com/).
 
-This project is not affiliated with Indiana University, Stellic or RateMyProfessors.
+**This project is not affiliated with, endorsed by or sponsored by Indiana University, Stellic or RateMyProfessors.**
 
 <details>
 <summary><b>For developers</b></summary>
