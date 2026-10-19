@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "IU Enrollment Plus",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "IU Bloomington grade distributions and RateMyProfessors ratings beside every course in Stellic.",
   "homepage_url": "https://github.com/Msde-7/iu-enrollment-plus",
   "icons": {

@@ -12,6 +12,8 @@ const SWITCH_DELAY_MS = 80;
 const CLOSE_DELAY_MS = 220;
 const FADE_MS = 150;
 const MARGIN = 8;
+const GAP = 6;
+const SIDE_LIFT = 48;
 
 /**
  * One floating grade card at a time. Hovering previews it and clicking pins it open.
@@ -38,14 +40,32 @@ export function createPopover(mountHost, getSettings) {
     return layer;
   }
 
+  /** Below or above the badge when the card fits, otherwise beside it, so the badge stays visible. */
   function place() {
     if (!card || !anchor) return;
     const box = anchor.getBoundingClientRect();
     const { offsetWidth: width, offsetHeight: height } = card;
-    const below = box.bottom + MARGIN + height < innerHeight || box.top < height + MARGIN;
-    card.style.left = `${Math.min(Math.max(MARGIN, box.left), innerWidth - width - MARGIN)}px`;
-    card.style.top = `${below ? Math.min(box.bottom + 6, innerHeight - height - MARGIN) : box.top - height - 6}px`;
-    card.style.transformOrigin = below ? "top left" : "bottom left";
+    /** @param {number} value @param {number} max */
+    const clamp = (value, max) => Math.min(Math.max(MARGIN, value), max - MARGIN);
+    let left = clamp(box.left, innerWidth - width);
+    let top;
+    let origin = "top left";
+
+    if (box.bottom + GAP + height <= innerHeight - MARGIN) {
+      top = box.bottom + GAP;
+    } else if (box.top - GAP - height >= MARGIN) {
+      top = box.top - GAP - height;
+      origin = "bottom left";
+    } else {
+      const right = box.right + GAP;
+      const leftSide = box.left - GAP - width;
+      left = right + width <= innerWidth - MARGIN ? right : leftSide >= MARGIN ? leftSide : left;
+      top = clamp(box.top - SIDE_LIFT, innerHeight - height);
+      origin = left > box.left ? "top left" : "top right";
+    }
+    card.style.left = `${left}px`;
+    card.style.top = `${top}px`;
+    card.style.transformOrigin = origin;
   }
 
   /** @param {boolean} value */
