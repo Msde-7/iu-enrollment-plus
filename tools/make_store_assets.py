@@ -56,7 +56,7 @@ def card_screenshot(out: str) -> None:
 def promo_tile(out: str) -> None:
     canvas = Image.new("RGB", (440, 280), CRIMSON)
     draw = ImageDraw.Draw(canvas)
-    icon = render(tile=(*WHITE, 255), bars=(*CRIMSON, 255)).resize((88, 88), Image.Resampling.LANCZOS)
+    icon = render(tile=(*WHITE, 255), fill=(*CRIMSON, 255)).resize((88, 88), Image.Resampling.LANCZOS)
     canvas.paste(icon, (40, 56), icon)
     draw.text((40, 168), "IU Enrollment Plus", font=font(36, bold=True), fill=WHITE)
     draw.text((40, 216), "Grades and ratings in Stellic", font=font(20), fill=(255, 220, 220))
