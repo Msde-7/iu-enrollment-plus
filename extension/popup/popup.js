@@ -177,5 +177,11 @@ byId("search-form").addEventListener("submit", (e) => {
 });
 
 hint.textContent = IDLE_HINT;
+if (!(await request({ type: "status" }))) {
+  hint.replaceChildren(
+    "Grade data isn't loaded yet. ",
+    h("a", { attrs: { href: "../welcome/welcome.html", target: "_blank" } }, "Load it with your IU login"),
+  );
+}
 byId("fields").replaceChildren(...FIELDS.map(renderField));
 renderPreview();

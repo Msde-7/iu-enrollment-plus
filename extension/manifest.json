@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "IU Enrollment Plus",
-  "version": "1.2.2",
-  "description": "IU Bloomington grade distributions and RateMyProfessors ratings beside every course in Stellic.",
+  "version": "1.3.0",
+  "description": "Grade distributions, downloaded with your own IU login, and RateMyProfessors ratings beside every course in Stellic.",
   "homepage_url": "https://github.com/Msde-7/iu-enrollment-plus",
   "icons": {
     "16": "icons/icon-16.png",
@@ -38,6 +38,7 @@
       "48": "icons/icon-48.png"
     }
   },
-  "permissions": ["storage", "scripting"],
-  "host_permissions": ["https://stellic.iu.edu/*", "https://*.stellic.com/*", "https://www.ratemyprofessors.com/*"]
+  "permissions": ["storage", "scripting", "unlimitedStorage"],
+  "host_permissions": ["https://stellic.iu.edu/*", "https://*.stellic.com/*", "https://www.ratemyprofessors.com/*"],
+  "optional_host_permissions": ["https://gradedistribution.registrar.indiana.edu/*"]
 }

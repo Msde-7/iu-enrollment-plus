@@ -1,4 +1,5 @@
-// Loads the extension into a real Chromium browser against a mock Stellic page and checks what it renders.
+// Loads the extension into a real Chromium browser, loads grades from a mock registrar, and checks what a mock
+// Stellic page renders.
 // Pass the path to Edge or Chrome for Testing, since branded Chrome ignores --load-extension.
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -19,7 +20,28 @@ const workDir = mkdtempSync(join(tmpdir(), "iug-e2e-"));
 const extDir = join(workDir, "extension");
 cpSync(new URL("extension", root), extDir, { recursive: true });
 
-const server = createServer((_req, res) => res.writeHead(200, { "Content-Type": "text/html" }).end(page));
+const TERMS =
+  '<select name="term"><option value="all">All Terms</option><option value="4258">Fall 2025</option></select>';
+const EXPORT = [
+  '"TERM","TERM DESCRIPTION","SUBJECT","COURSE","COURSE DESCRIPTION","INSTRUCTOR NAME","SMALL CLASS NOTATION","A","B","C"',
+  ...[
+    ["CSCI-C", "211", "INTRO TO COMPUTER SCIENCE", "Shan,Chung-chieh"],
+    ["MATH-M", "211", "CALCULUS I", "Smith,Ann"],
+    ["ECON-E", "201", "INTRO TO MICROECONOMICS", "Glomm,Gerhard"],
+    ["ECON-E", "309", "TOPICS IN ECONOMICS", "Glomm,Gerhard"],
+    ["ECON-E", "309", "TOPICS IN ECONOMICS", "Stone,John"],
+  ].map((cells) => `"4258","FA25",${cells.map((c) => `"${c}"`).join(",")},"","20","10","5"`),
+].join("\r\n");
+
+/** @type {Record<string, [string, string]>} */
+const ROUTES = {
+  "/distribution/index.php": ["text/html", TERMS],
+  "/distribution/export.php": ["text/csv", EXPORT],
+};
+const server = createServer((req, res) => {
+  const [type, body] = ROUTES[new URL(req.url ?? "/", "http://x").pathname] ?? ["text/html", page];
+  res.writeHead(200, { "Content-Type": type }).end(body);
+});
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
 const siteUrl = `http://127.0.0.1:${/** @type {import("node:net").AddressInfo} */ (server.address()).port}/`;
 
@@ -28,9 +50,16 @@ const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 for (const entry of [...manifest.content_scripts, ...manifest.web_accessible_resources]) {
   entry.matches.push("http://127.0.0.1/*");
 }
+manifest.host_permissions.push("http://127.0.0.1/*");
 writeFileSync(manifestPath, JSON.stringify(manifest));
-const hostsPath = join(extDir, "content", "hosts.js");
-writeFileSync(hostsPath, readFileSync(hostsPath, "utf8").replace('mode: "closed"', 'mode: "open"'));
+
+/** @param {string[]} path @param {string} from @param {string} to */
+function patch(path, from, to) {
+  const file = join(extDir, ...path);
+  writeFileSync(file, readFileSync(file, "utf8").replace(from, to));
+}
+patch(["content", "hosts.js"], 'mode: "closed"', 'mode: "open"');
+patch(["lib", "registrar.js"], "https://gradedistribution.registrar.indiana.edu", siteUrl.slice(0, -1));
 
 const browser = spawn(
   browserPath,
@@ -89,6 +118,16 @@ const RENDERED = `(() => {
 
 try {
   await devtools("/json/version");
+  let welcome;
+  while (!(welcome = (await devtools("/json/list")).find((t) => t.url.endsWith("welcome/welcome.html")))) {
+    await sleep(200);
+  }
+  const synced = await evaluate(
+    welcome.webSocketDebuggerUrl,
+    `import("../lib/registrar.js").then((m) => m.syncGrades(() => {}))`,
+  );
+  assert.equal(synced, true, "grades load from the registrar");
+
   const tab = await devtools(`/json/new?${siteUrl}`, "PUT");
   await sleep(6000);
   const hosts = await evaluate(tab.webSocketDebuggerUrl, RENDERED);

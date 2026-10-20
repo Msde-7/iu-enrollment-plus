@@ -1,8 +1,10 @@
 import { lookupCourses, searchCourses } from "./lib/courses.js";
 import { pickTeacher, splitRegistrarName } from "./lib/instructors.js";
+import { GRADES_KEY } from "./lib/registrar.js";
 
 /**
  * @typedef {import("./lib/types.js").GradeData} GradeData
+ * @typedef {import("./lib/types.js").GradeStatus} GradeStatus
  * @typedef {import("./lib/types.js").Rating} Rating
  * @typedef {import("./lib/types.js").Request} Request
  * @typedef {import("./lib/instructors.js").Teacher} Teacher
@@ -18,9 +20,23 @@ const TEACHER_QUERY = `query ($text: String!, $school: ID!) {
   } }
 }`;
 
-/** @type {Promise<GradeData> | undefined} */
+const WELCOME_URL = chrome.runtime.getURL("welcome/welcome.html");
+
+/** @type {Promise<GradeData | undefined> | undefined} */
 let gradeData;
-const loadGrades = () => (gradeData ??= fetch(chrome.runtime.getURL("data/grades.json")).then((r) => r.json()));
+const storedGrades = () =>
+  (gradeData ??= chrome.storage.local
+    .get(GRADES_KEY)
+    .then((s) => /** @type {GradeData | undefined} */ (s[GRADES_KEY])));
+chrome.storage.onChanged.addListener((changes) => {
+  if (GRADES_KEY in changes) gradeData = undefined;
+});
+
+async function loadGrades() {
+  const data = await storedGrades();
+  if (!data) throw new Error("Grade data has not been loaded yet");
+  return data;
+}
 
 /** @param {string} text @returns {Promise<Teacher[]>} */
 async function searchTeachers(text) {
@@ -58,6 +74,12 @@ async function lookupRating(instructor) {
   return value;
 }
 
+/** @returns {Promise<GradeStatus | null>} */
+async function gradeStatus() {
+  const data = await storedGrades();
+  return data ? { courses: Object.keys(data.courses).length, syncedAt: data.syncedAt ?? 0 } : null;
+}
+
 /** @param {Request} message */
 async function handle(message) {
   switch (message.type) {
@@ -67,14 +89,15 @@ async function handle(message) {
       return searchCourses(await loadGrades(), message.text);
     case "rating":
       return lookupRating(message.instructor);
+    case "status":
+      return gradeStatus();
   }
 }
 
-chrome.runtime.onInstalled.addListener(async ({ reason }) => {
-  if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    await chrome.tabs.create({ url: chrome.runtime.getURL("welcome/welcome.html") });
-  }
-  await chrome.storage.local.clear();
+chrome.runtime.onInstalled.addListener(async () => {
+  const stored = await chrome.storage.local.get(null);
+  await chrome.storage.local.remove(Object.keys(stored).filter((key) => key.startsWith("rating:")));
+  if (!stored[GRADES_KEY]) await chrome.tabs.create({ url: WELCOME_URL });
   const [{ matches, js: files } = {}] = chrome.runtime.getManifest().content_scripts ?? [];
   if (!matches || !files) return;
   const tabs = await chrome.tabs.query({ url: matches });

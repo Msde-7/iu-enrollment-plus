@@ -17,6 +17,9 @@
  * @property {Record<string, Benchmark>} levels
  * @property {Record<string, Benchmark>} deptLevels
  * @property {Record<string, CourseRecord>} courses
+ * @property {number} [syncedAt]
+ *
+ * @typedef {{ courses: number, syncedAt: number }} GradeStatus
  *
  * @typedef {Benchmark & { label: string }} LabeledBenchmark
  *
@@ -46,9 +49,15 @@
  *
  * @typedef {{ type: "courses", codes: string[] }
  *   | { type: "search", text: string }
- *   | { type: "rating", instructor: string }} Request
+ *   | { type: "rating", instructor: string }
+ *   | { type: "status" }} Request
  *
- * @typedef {{ courses: Record<string, Course>, search: Course[], rating: Rating | null }} Responses
+ * @typedef {{
+ *   courses: Record<string, Course>,
+ *   search: Course[],
+ *   rating: Rating | null,
+ *   status: GradeStatus | null,
+ * }} Responses
  */
 
 export {};

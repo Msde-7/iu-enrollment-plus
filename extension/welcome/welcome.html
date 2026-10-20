@@ -7,15 +7,32 @@
     <link rel="icon" href="../icons/icon-32.png" />
     <link rel="stylesheet" href="../ui/styles.css" />
     <link rel="stylesheet" href="welcome.css" />
+    <script type="module" src="welcome.js"></script>
   </head>
   <body class="root">
     <main>
       <header class="intro">
         <img src="../icons/icon-128.png" alt="" width="72" height="72" />
-        <h1>You're all set</h1>
+        <h1>Welcome to IU Enrollment Plus</h1>
         <p>IU Enrollment Plus adds real grade distributions and professor ratings to every course in Stellic.</p>
-        <a class="cta" href="https://stellic.iu.edu/app/courses" target="_blank" rel="noopener">Open Stellic</a>
       </header>
+
+      <section class="setup">
+        <h2>Load the grade data</h2>
+        <p>
+          This extension does not include any grade data. A valid IU login is required to download the grade
+          distributions from the IU Registrar through your own account. Sign in once, then load them. They are saved
+          only in this browser.
+        </p>
+        <div class="actions">
+          <button id="sign-in" class="cta secondary">1. Sign in to IU</button>
+          <button id="load" class="cta">2. Load grade data</button>
+        </div>
+        <p id="status" class="status" aria-live="polite"></p>
+        <a id="open-stellic" class="cta" href="https://stellic.iu.edu/app/courses" target="_blank" rel="noopener" hidden
+          >Open Stellic</a
+        >
+      </section>
 
       <ol class="steps">
         <li>
@@ -51,7 +68,8 @@
       </ol>
 
       <footer>
-        Grade data comes from the public IU Registrar reports. Nothing about you is collected.
+        Grade data is downloaded from the IU Registrar with your own login and stays in this browser. Nothing about you
+        is collected.
         <a href="https://github.com/Msde-7/iu-enrollment-plus" target="_blank" rel="noopener">Source code</a>
       </footer>
     </main>
