@@ -10,7 +10,7 @@
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-  "minimum_chrome_version": "111",
+  "minimum_chrome_version": "114",
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -38,7 +38,7 @@
       "48": "icons/icon-48.png"
     }
   },
-  "permissions": ["storage", "scripting", "unlimitedStorage"],
+  "permissions": ["storage", "scripting"],
   "host_permissions": ["https://stellic.iu.edu/*", "https://*.stellic.com/*", "https://www.ratemyprofessors.com/*"],
   "optional_host_permissions": ["https://gradedistribution.registrar.indiana.edu/*"]
 }
